@@ -1,9 +1,11 @@
 package com.example.demo.service
 
-import com.example.demo.controller.dto.expense.CreateExpenseRequest
-import com.example.demo.controller.dto.expense.UpdateExpenseRequest
+import com.example.demo.controller.dto.transaction.CreateTransactionRequest
+import com.example.demo.controller.dto.transaction.UpdateTransactionRequest
+import com.example.demo.entity.TransactionEntity
 import com.example.demo.exception.NotFoundException
 import com.example.demo.mapper.toEntity
+import com.example.demo.repository.AccountRepository
 import com.example.demo.repository.CategoryRepository
 import com.example.demo.repository.TransactionRepository
 import org.springframework.stereotype.Service
@@ -14,45 +16,47 @@ import java.util.UUID
 @Service
 class TransactionService(
     private val transactionRepository: TransactionRepository,
+    private val accountRepository: AccountRepository,
     private val categoryRepository: CategoryRepository
 ) {
+
     @Transactional
-    fun create(userId: UUID, req: CreateExpenseRequest): ExpenseEntity {
-        val category = categoryRepository.findById(req.categoryId)
-            .orElseThrow { NotFoundException("Category ${req.categoryId} not found") }
-        if (category.userId != userId) throw NotFoundException("Category ${req.categoryId} not found")
-        if (category.archived) throw IllegalArgumentException("Category is archived")
+    fun create(userId: UUID, req: CreateTransactionRequest): TransactionEntity {
+        val account = accountRepository.findByIdAndUserId(req.accountId, userId)
+            ?: throw NotFoundException("Account ${req.accountId} not found")
 
-        return transactionRepository.save(req.toEntity(userId))
+        val category = req.categoryId?.let {
+            categoryRepository.findById(it)
+                .orElseThrow { NotFoundException("Category $it not found") }
+        }
+
+        return transactionRepository.save(req.toEntity(account, category))
     }
 
     @Transactional(readOnly = true)
-    fun get(userId: UUID, id: UUID): ExpenseEntity {
-        val expense = transactionRepository.findById(id)
-            .orElseThrow { NotFoundException("Expense $id not found") }
-        if (expense.userId != userId) throw NotFoundException("Expense $id not found")
-        return expense
-    }
+    fun get(userId: UUID, id: UUID): TransactionEntity =
+        transactionRepository.findByIdAndAccountUserId(id, userId)
+            ?: throw NotFoundException("Transaction $id not found")
 
     @Transactional(readOnly = true)
-    fun list(userId: UUID, from: Instant?, to: Instant?): List<ExpenseEntity> =
+    fun list(userId: UUID, from: Instant?, to: Instant?): List<TransactionEntity> =
         if (from != null && to != null)
-            transactionRepository.findAllByUserIdAndSpentAtBetweenOrderBySpentAtDesc(userId, from, to)
-        else transactionRepository.findAllByUserIdOrderBySpentAtDesc(userId)
+            transactionRepository.findAllByAccountUserIdAndOccurredAtBetweenOrderByOccurredAtDesc(userId, from, to)
+        else
+            transactionRepository.findAllByAccountUserIdOrderByOccurredAtDesc(userId)
 
     @Transactional
-    fun update(userId: UUID, id: UUID, req: UpdateExpenseRequest): ExpenseEntity {
-        val expense = get(userId, id)
-        req.amount?.let { expense.amount = it }
-        req.currency?.let { expense.currency = it }
-        req.description?.let { expense.description = it }
-        req.spentAt?.let { expense.spentAt = it }
-        return transactionRepository.save(expense)
+    fun update(userId: UUID, id: UUID, req: UpdateTransactionRequest): TransactionEntity {
+        val tx = get(userId, id)
+        req.amount?.let { tx.amount = it }
+        req.note?.let { tx.note = it }
+        req.occurredAt?.let { tx.occurredAt = it }
+        return transactionRepository.save(tx)
     }
 
     @Transactional
     fun delete(userId: UUID, id: UUID) {
-        get(userId, id)
-        transactionRepository.deleteById(id)
+        val tx = get(userId, id)
+        transactionRepository.delete(tx)
     }
 }

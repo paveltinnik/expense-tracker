@@ -1,10 +1,13 @@
 package com.example.demo.service
 
+import com.example.demo.controller.dto.user.RegisterUserRequest
 import com.example.demo.entity.UserEntity
-import com.example.demo.repository.CategoryRepository
-import jakarta.transaction.Transactional
-import org.apache.catalina.User
+import com.example.demo.exception.NotFoundException
+import com.example.demo.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class UserService(
@@ -12,14 +15,18 @@ class UserService(
     private val passwordEncoder: PasswordEncoder
 ) {
     @Transactional
-    fun register(login: String, rawPassword: String): UserEntity {
-        if (userRepository.existsByLogin(login)) {
+    fun register(req: RegisterUserRequest): UserEntity {
+        if (userRepository.existsByLogin(req.login)) {
             throw IllegalArgumentException("Login already taken")
         }
         val user = UserEntity(
-            login = login,
-            passwordHash = passwordEncoder.encode(rawPassword)  // ← BCrypt
+            login = req.login.trim(),
+            passwordHash = passwordEncoder.encode(req.password) ?: ""
         )
         return userRepository.save(user)
     }
+
+    @Transactional(readOnly = true)
+    fun getById(id: UUID): UserEntity =
+        userRepository.findById(id).orElseThrow { NotFoundException("User $id not found") }
 }
