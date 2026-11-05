@@ -38,3 +38,12 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### Secrets ###
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+application-local.yml
+application-local.properties
