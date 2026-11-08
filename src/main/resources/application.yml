@@ -1,6 +1,8 @@
 spring:
   application:
-    name: expense-tracker
+    name: expense_tracker
+  config:
+    import: optional:file:./.env[.properties]
 
   datasource:
     url: ${DB_URL}
