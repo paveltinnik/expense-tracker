@@ -65,5 +65,5 @@ tasks.withType<Test> {
 }
 
 tasks.named<BootBuildImage>("bootBuildImage") {
-    imageName = "expense-tracker:latest"
+    imageName = "ghcr.io/paveltinnik/expense-tracker:latest"
 }
