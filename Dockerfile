@@ -3,21 +3,22 @@
 # Stage 1: Build
 # ==========================================
 FROM gradle:9.8.2-jdk21 AS builder
-
 WORKDIR /workspace
 
-# Gradle Wrapper
 COPY gradlew ./
 COPY gradle/ gradle/
-
-# Gradle configuration
 COPY settings.gradle.kts build.gradle.kts ./
 
-# Project sources
-COPY src/ src/
+COPY app/ app/
+COPY common/ common/
+COPY security/ security/
+COPY user/ user/
+COPY account/ account/
+COPY category/ category/
+COPY transaction/ transaction/
 
-RUN chmod +x gradlew && \
-    ./gradlew clean bootJar --no-daemon -x test
+RUN chmod +x gradlew
+RUN ./gradlew :app:bootJar --no-daemon -x test
 
 
 # ==========================================
