@@ -31,7 +31,6 @@ subprojects {
     dependencies {
         "implementation"(platform("org.springframework.boot:spring-boot-dependencies:4.1.2"))
         "implementation"("org.jetbrains.kotlin:kotlin-reflect")
-        "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin")
     }
 
     tasks.withType<Test> {
