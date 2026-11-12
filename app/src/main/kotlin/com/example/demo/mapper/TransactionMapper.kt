@@ -2,9 +2,6 @@ package com.example.demo.mapper
 
 import com.example.demo.controller.dto.transaction.CreateTransactionRequest
 import com.example.demo.controller.dto.transaction.TransactionResponse
-import com.example.demo.entity.AccountEntity
-import com.example.demo.entity.CategoryEntity
-import com.example.demo.entity.TransactionEntity
 
 fun TransactionEntity.toResponse() = TransactionResponse(
     id = id,

@@ -1,6 +1,5 @@
 package com.example.demo.controller.dto.transaction
 
-import com.example.demo.entity.TransactionType
 import jakarta.validation.constraints.DecimalMin
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size

@@ -2,8 +2,7 @@ package com.example.demo.controller
 
 import com.example.demo.controller.dto.category.CategoryResponse
 import com.example.demo.controller.dto.category.CreateCategoryRequest
-import com.example.demo.mapper.toResponse
-import com.example.demo.service.CategoryService
+import com.example.com.example.demo.mapper.toResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*

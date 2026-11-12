@@ -1,9 +1,9 @@
 package com.example.demo.service
 
-import com.example.demo.controller.dto.user.RegisterUserRequest
-import com.example.demo.entity.UserEntity
+import com.example.com.example.demo.entity.UserEntity
 import com.example.demo.exception.NotFoundException
-import com.example.demo.repository.UserRepository
+import com.example.com.example.demo.repository.UserRepository
+import com.example.demo.controller.dto.user.RegisterUserRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

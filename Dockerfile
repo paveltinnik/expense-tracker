@@ -40,7 +40,7 @@ FROM eclipse-temurin:21-jre-jammy AS runtime
 
 WORKDIR /application
 
-# Create non-root user
+# Create non-root demo
 RUN groupadd --system spring && \
     useradd --system --gid spring spring
 

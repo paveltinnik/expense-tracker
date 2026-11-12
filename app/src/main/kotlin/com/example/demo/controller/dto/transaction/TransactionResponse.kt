@@ -1,6 +1,5 @@
 package com.example.demo.controller.dto.transaction
 
-import com.example.demo.entity.TransactionType
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.*

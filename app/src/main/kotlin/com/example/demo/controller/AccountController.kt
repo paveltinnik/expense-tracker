@@ -2,9 +2,8 @@ package com.example.demo.controller
 
 import com.example.demo.controller.dto.account.AccountResponse
 import com.example.demo.controller.dto.account.CreateAccountRequest
-import com.example.demo.mapper.toResponse
-import com.example.demo.security.AppUserDetails
-import com.example.demo.service.AccountService
+import com.example.com.example.demo.mapper.toResponse
+import com.example.com.example.demo.security.AppUserDetails
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal

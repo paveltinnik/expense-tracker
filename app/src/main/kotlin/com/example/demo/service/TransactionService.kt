@@ -2,12 +2,8 @@ package com.example.demo.service
 
 import com.example.demo.controller.dto.transaction.CreateTransactionRequest
 import com.example.demo.controller.dto.transaction.UpdateTransactionRequest
-import com.example.demo.entity.TransactionEntity
 import com.example.demo.exception.NotFoundException
 import com.example.demo.mapper.toEntity
-import com.example.demo.repository.AccountRepository
-import com.example.demo.repository.CategoryRepository
-import com.example.demo.repository.TransactionRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant

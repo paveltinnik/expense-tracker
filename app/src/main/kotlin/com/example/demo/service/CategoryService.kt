@@ -1,10 +1,8 @@
 package com.example.demo.service
 
 import com.example.demo.controller.dto.category.CreateCategoryRequest
-import com.example.demo.entity.CategoryEntity
 import com.example.demo.exception.NotFoundException
 import com.example.demo.mapper.toEntity
-import com.example.demo.repository.CategoryRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

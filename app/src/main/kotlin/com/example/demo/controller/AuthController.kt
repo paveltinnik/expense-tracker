@@ -1,10 +1,10 @@
 package com.example.demo.controller
 
-import com.example.demo.controller.dto.user.RegisterUserRequest
-import com.example.demo.controller.dto.user.UserResponse
-import com.example.demo.mapper.toResponse
-import com.example.demo.security.AppUserDetails
-import com.example.demo.service.UserService
+import com.example.user.controller.dto.user.RegisterUserRequest
+import com.example.com.example.demo.controller.dto.UserResponse
+import com.example.com.example.demo.mapper.toResponse
+import com.example.com.example.demo.security.AppUserDetails
+import com.example.com.example.demo.service.UserService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
