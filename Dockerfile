@@ -28,7 +28,7 @@ FROM eclipse-temurin:21-jre-jammy AS extractor
 
 WORKDIR /app
 
-COPY --from=builder /workspace/build/libs/*.jar application.jar
+COPY --from=builder /workspace/app/build/libs/app-*-SNAPSHOT.jar application.jar
 
 RUN java -Djarmode=tools -jar application.jar \
     extract --layers --destination extracted
