@@ -41,9 +41,9 @@ interface TransactionRepository : JpaRepository<TransactionEntity, UUID> {
         @Param("userId") userId: UUID,
     ): TransactionEntity?
 
-//    @Query("""
-//        SELECT COUNT(t) > 0 FROM TransactionEntity t
-//        WHERE t.category.id = :categoryId
-//    """)
-//    fun existsByCategoryId(@Param("categoryId") categoryId: UUID): Boolean
+    @Query("""
+        SELECT COUNT(t) > 0 FROM TransactionEntity t
+        WHERE t.category.id = :categoryId
+    """)
+    fun existsByCategoryId(@Param("categoryId") categoryId: UUID): Boolean
 }
